@@ -1,0 +1,225 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot Password</title>
+  <!-- ✅ reCAPTCHA v2 invisible -->
+<!-- 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    button {
+      background: #6e8efb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #5a78e3;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Forgot Password</h2>
+    <p>Enter your email to reset your password</p>
+    <form id="forgotForm">
+      <input type="email" id="email" placeholder="Enter your email" required>
+
+      <div class="g-recaptcha" data-sitekey="6LclfMArAAAAAH3LrTpB5xua4a7wN_zHod6_ZZo7"></div>
+      <button type="submit">Send Reset Link</button>
+    </form>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    async function onSubmit(token) {
+      const email = document.getElementById("email").value;
+
+      try {
+        const res = await fetch("/forgotPassword", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, captcha: token })
+        });
+
+        const data = await res.json();
+        document.getElementById("msg").textContent = data.message || data.error;
+      } catch {
+        document.getElementById("msg").textContent = "❌ Error sending reset link.";
+      }
+    }
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgot Password</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #6ef6fb, #c1a7e0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .box {
+      background: rgb(255, 255, 255);
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 320px;
+      text-align: center;
+      animation: slideUp 1s ease-in-out;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #4c57d6;
+    }
+
+    p {
+      color: #848383;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      outline: none;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #6e8efb;
+      box-shadow: 0 0 5px rgba(110, 142, 251, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #5ab5e3, #68d3ba);
+      color: white;
+      font-weight: bold;   
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.4s ease, transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #5ab5e3, #7e3);
+    }
+
+    .g-recaptcha {
+      margin: 10px 0;
+      transform: scale(0.9);
+      transform-origin: center;
+      transition: transform 0.3s ease;
+    }
+
+    .g-recaptcha:hover {
+      transform: scale(1);
+    }
+
+    /* Floating animation for box */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .box {
+      animation: slideUp 1s ease-out, float 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>🔒 Forgot Password</h2>
+    <p>Enter your email to reset your password</p>
+    
+    <form id="forgotForm">
+      <input type="email" id="email" placeholder="Enter your email" required />
+      <div class="g-recaptcha" data-sitekey="6LdlbP0rAAAAALWnAyOmzO9EMvbXKnv5su-K9tDD"></div>
+      <button type="submit">Send Reset Link</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("forgotForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const captcha = grecaptcha.getResponse();
+
+      if (!captcha) {
+        alert("⚠️ Please complete the CAPTCHA.");
+        return;
+      }
+
+      const res = await fetch("http://localhost:5000/forgotPassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, captcha }),
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+    });
+  </script>
+</body>
+</html>

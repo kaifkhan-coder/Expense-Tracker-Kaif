@@ -4,37 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Modern Expense Tracker Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #6e8efb, #a777e3);
-      color: #333;
+    /* 🌟 Global Styles */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #9fb3f4, #cfd993);
+      background-size: 300% 300%;
+      animation: gradientMove 8s ease infinite;
+      color: #333;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      padding: 20px;
+    }
+
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
     .container {
       background: #fff;
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 700px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 900px;
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       margin-bottom: 20px;
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: #4a4a4a;
     }
 
+    /* 🌟 Input Section */
     .input-group {
       display: flex;
       flex-wrap: wrap;
@@ -44,42 +64,47 @@
     }
 
     select, input, button {
-      padding: 10px;
+      padding: 12px 14px;
       border: 1px solid #ddd;
       border-radius: 10px;
       outline: none;
       font-size: 1rem;
       transition: all 0.3s ease;
+      min-width: 120px;
     }
 
     select:focus, input:focus {
       border-color: #6e8efb;
-      box-shadow: 0 0 8px rgba(110, 142, 251, 0.5);
+      box-shadow: 0 0 10px rgba(110, 142, 251, 0.3);
     }
 
     button {
-      background: #6e8efb;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
       color: #fff;
       border: none;
       cursor: pointer;
       font-weight: bold;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background: #5a78e3;
-      transform: scale(1.05);
+      transform: scale(1.08);
+      background: linear-gradient(135deg, #5a78e3, #9066d6);
     }
 
+    /* 🌟 Table Styling */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      overflow: hidden;
+      border-radius: 10px;
     }
 
     th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
+      padding: 14px;
       text-align: center;
+      border-bottom: 1px solid #ddd;
     }
 
     th {
@@ -89,33 +114,72 @@
     }
 
     tr:nth-child(even) {
-      background: #f9f9f9;
+      background: #f8f8f8;
     }
 
+    /* 🌟 Delete Button */
     .delete-btn {
       background: #ff4d4d;
       color: #fff;
       border: none;
-      padding: 5px 10px;
+      padding: 6px 12px;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: 0.3s;
     }
 
     .delete-btn:hover {
       background: #e60000;
     }
 
+    /* 🌟 Total Section */
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       margin-top: 10px;
+      color: #444;
     }
 
     #total-amount {
       color: #6e8efb;
       font-weight: bold;
     }
+
+    /* 🌟 Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .input-group {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      select, input, button {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      th, td {
+        padding: 10px;
+      }
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
@@ -130,7 +194,7 @@
       <input type="number" id="amount_input" placeholder="Amount">
       <input type="text" id="info" placeholder="Info">
       <input type="date" id="date_input">
-      <button id="add_btn">Add</button>
+      <button id="add_btn" type="button">Add</button>
     </div>
 
     <table>
@@ -147,8 +211,33 @@
     </table>
 
     <h2>Total: ₹<span id="total-amount">0</span></h2>
-  </div>
+    <button id="logout_btn" type="button">Logout</button>
+    <button id="save_btn" type="button">Save Data</button>
+    <button id="download_btn" type="button">Download CSV</button>
+    <!-- <button id="previous_expense" type="button">Previous Expense</button> -->
+    <!-- <button id="pay_btn" type="button">Unlock Premium</button> -->
 
-  <script src="script.js"></script>
+
+    <h2>Expense Chart</h2>
+    <canvas id="expenseChart" width="400" height="200"></canvas>
+  </div>
+  <script src="script.js">
+    async function fetchPreviousExpenses() {
+  const token = localStorage.getItem("token");
+  if (!token) return window.location.href = "/login.html";
+
+  try {
+    const res = await fetch("/expenses", { // backend route
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const data = await res.json();
+
+    displayExpensesTable(data);
+  } catch (err) {
+    console.error("Failed to fetch previous expenses", err);
+  }
+}
+
+  </script>
 </body>
 </html>
